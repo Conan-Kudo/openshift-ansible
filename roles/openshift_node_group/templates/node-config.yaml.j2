@@ -21,6 +21,11 @@ imageConfig:
 iptablesSyncPeriod: 30s
 kind: NodeConfig
 kubeletArguments:
+{% if openshift_node_group_use_persistentlocalvolumes | bool %}
+  feature-gates:
+  - PersistentLocalVolumes=true
+  - VolumeScheduling=true
+{% endif %}
   cloud-config:
   - /etc/origin/cloudprovider/{{ openshift_node_group_cloud_provider }}.conf
   cloud-provider:
